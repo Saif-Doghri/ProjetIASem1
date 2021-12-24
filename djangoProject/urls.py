@@ -18,6 +18,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('DemoTechnique/',include('DemoTechniqueML.urls'))
+    path('DemoTechnique/',include('DemoTechniqueML.urls')),
+    path('Predictive/',include('Predictive.urls'))
 ]
 
