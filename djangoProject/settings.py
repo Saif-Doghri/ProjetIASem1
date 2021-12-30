@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'DemoTechniqueML.apps.DemotechniquemlConfig',
     'Predictive.apps.PredictiveConfig',
+    'users.apps.UsersConfig',
+    'PredictionPrixVente.apps.PredictionprixventeConfig',
 ]
 
 MIDDLEWARE = [
