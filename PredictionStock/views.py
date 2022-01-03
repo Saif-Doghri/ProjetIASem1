@@ -16,15 +16,6 @@ from .apps import *
 
 # Create your views here.
 def stockpredictionhome(request):
-    connect = driver.connect('Driver={ODBC Driver 17 for SQL Server};'
-                             'Server=DESKTOP-FDR79PT;'
-                             'Database=DWPharma;'
-                             'Trusted_Connection=yes;')
-    connect1 = driver.connect('Driver={ODBC Driver 17 for SQL Server};'
-                              'Server=DESKTOP-FDR79PT;'
-                              'Database=pharm_SA;'
-                              'Trusted_Connection=yes;'
-                              )
     if request.method == 'GET':
         return render(request, 'PredictionStock/PredictStock.html')
     elif request.method == 'POST':
