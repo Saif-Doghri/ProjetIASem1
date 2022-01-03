@@ -1,5 +1,6 @@
 import os.path
 
+import plotly.tools
 from django.shortcuts import render
 import joblib
 from statsmodels.tsa.arima_model import ARIMAResults
@@ -9,7 +10,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.offline as opf
 import pyodbc as driver
-
+import matplotlib.pyplot as plt
 from .apps import *
 
 
@@ -27,14 +28,15 @@ def stockpredictionhome(request):
     if request.method == 'GET':
         return render(request, 'PredictionStock/PredictStock.html')
     elif request.method == 'POST':
-        df_stock = pd.read_sql_query("Select * from FaitStock", connect)
-        df_stock = df_stock.drop(columns=["Article_Fk"])
-        df_stock = df_stock.loc[df_stock["TypeMouvement"] == "Entrée"]
-        df_stock['Date_Fk'] = df_stock["Date_Fk"].apply(pd.to_datetime)
-        df_stock = df_stock.groupby(['Date_Fk']).mean()
-        df_stock.index = pd.DatetimeIndex(df_stock.index).to_period('D')
-        model = pd.read_pickle('PredictionStock/Models/mymodel.pkl')
-        value = model.predict(start=request.POST['startdate'],end=request.POST['enddate'])
-        fig = px.bar(df_stock, x=df_stock.index.to_timestamp(),y="Qte",labels=dict(x="Date",Qte="Quantite"))
-        fig_div = opf.plot(fig, output_type='div')
-        return render(request, 'PredictionStock/PredictStock.html', context={'data': fig_div})
+        sarimax_model = pd.read_pickle('PredictionStock/Models/sarimax_new.pkl')
+        arima_model=pd.read_pickle('PredictionStock/Models/arima_model.pkl')
+        fig_predic ,ax=plt.subplots()
+        if request.POST['model']=='sarimax':
+            value = sarimax_model.predict(start=request.POST['startdate'],end=request.POST['enddate'],freq='W')
+            value.plot(legend=True)
+        if request.POST['model']=='arima':
+            value2 = arima_model.predict(start=request.POST['startdate'],end=request.POST['enddate'])
+            value2.plot(legend=True)
+        fig_predic=plotly.tools.mpl_to_plotly(fig_predic)
+        fig_predic_div = opf.plot(fig_predic, output_type='div')
+        return render(request, 'PredictionStock/PredictStock.html', context={'predic': fig_predic_div})

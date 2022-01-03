@@ -21,6 +21,10 @@
     <orderEntry type="library" name="all" level="application" />
     <orderEntry type="library" name="emoji" level="application" />
     <orderEntry type="library" name="Chart.js" level="application" />
+    <orderEntry type="library" name="splde.cjs" level="application" />
+    <orderEntry type="library" name="splide" level="application" />
+    <orderEntry type="library" name="splide.cjs" level="application" />
+    <orderEntry type="library" name="@splidejs/splide" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
